@@ -1,0 +1,94 @@
+flowchart TD
+    website["ASSURE website"]
+
+    subgraph navigation["Main navigation — content from navigation.primary"]
+        home["Κεντρική<br/>/home"]
+        about["Σχετικά με το ASSURE<br/>/about"]
+        consortium["Κοινοπραξία<br/>/consortium"]
+        news["Νέα<br/>/news"]
+        events["Συμμετοχές σε Events και Εκδηλώσεις<br/>/events"]
+        contact["Επικοινωνήστε μαζί μας<br/>/contact"]
+    end
+
+    website --> root["ASSURE landing page<br/>/"]
+    website --> home
+    website --> about
+    website --> consortium
+    website --> news
+    website --> events
+    website --> contact
+
+    about --> project["Το Έργο<br/>/about/project"]
+    about --> objectives["Στόχοι<br/>/about/objectives"]
+    about --> framework["Τεχνικό Πλαίσιο<br/>/about/technical-framework"]
+
+    news --> latest["Τελευταία Νέα<br/>/news/latest-news"]
+    news --> interview["Συνέντευξη στο κανάλι της Ναυτεμπορικής<br/>/news/interview-naftemporiki"]
+    news --> paper["Δημοσίευση paper<br/>/news/paper-publication"]
+
+    events --> closing["Διοργάνωση ενημερωτικής ημερίδας – Closing event<br/>/events/closing-event"]
+    events --> copenhagen["Διεθνές Συνέδριο WindEurope Κοπεγχάγη, Απρίλιος 2023<br/>/events/windeurope-copenhagen-2023"]
+    events --> hamburg["Διεθνές Συνέδριο Wind Energy Hamburg, Σεπτέμβριος 2022<br/>/events/wind-energy-hamburg-2022"]
+    events --> windday["Παγκόσμια Ημέρα Αιολικής Ενέργειας, Ιούνιος 2022<br/>/events/global-wind-day-2022"]
+    events --> bilbao["Ετήσιο Συνέδριο WindEurope, Bilbao Απρίλιος 2022<br/>/events/windeurope-bilbao-2022"]
+    events --> electric["Electric City, WindEurope, Κοπεγχάγη Νοέμβριος 2021<br/>/events/electric-city-copenhagen-2021"]
+
+    news -. "list cards use news.items; each item points to its detail page" .-> latest
+    news -.-> interview
+    news -.-> paper
+    events -. "list cards use events.items; each item points to its detail page" .-> closing
+    events -.-> copenhagen
+    events -.-> hamburg
+    events -.-> windday
+    events -.-> bilbao
+    events -.-> electric
+
+    subgraph content["Page content in assure-website.json"]
+        pageData["pages[]<br/>titles, routes, metadata, breadcrumbs and ordered sections"]
+        consortiumData["pages[page-consortium].sections<br/>five consortium members"]
+        contactData["pages[page-contact].sections<br/>contact information"]
+        newsData["news.items<br/>dates, summaries and detail relationships"]
+        eventData["events.items<br/>dates, summaries and detail relationships"]
+    end
+
+    root & home & about & project & objectives & framework --> pageData
+    consortium --> consortiumData
+    contact --> contactData
+    news & latest & interview & paper --> newsData
+    events & closing & copenhagen & hamburg & windday & bilbao & electric --> eventData
+
+    subgraph shared["Reusable content components"]
+        header["Site header and primary navigation<br/>navigation.primary"]
+        breadcrumbs["Breadcrumb trail<br/>each page's breadcrumbs"]
+        footer["Funding and legal footer<br/>footer"]
+        cards["Dated content cards<br/>news.items and events.items"]
+        sharing["Article sharing links<br/>each detail page's shareLinks"]
+    end
+
+    header -. "appears on every page" .-> website
+    footer -. "appears on every page" .-> website
+    breadcrumbs -. "appears on inner pages" .-> pageData
+    cards -. "appears on list pages" .-> news
+    cards -.-> events
+    sharing -. "appears on dated detail pages" .-> latest
+    sharing -.-> interview
+    sharing -.-> paper
+    sharing -.-> closing
+    sharing -.-> copenhagen
+    sharing -.-> hamburg
+    sharing -.-> windday
+    sharing -.-> bilbao
+    sharing -.-> electric
+
+    classDef site fill:#173f5f,color:#fff,stroke:#0b273c
+    classDef area fill:#2f80a8,color:#fff,stroke:#205a77
+    classDef page fill:#e9f5fa,color:#123b5d,stroke:#5aa6c7
+    classDef detail fill:#fff7df,color:#4a3a00,stroke:#d9aa2b
+    classDef data fill:#f2eefb,color:#35265b,stroke:#8467b4
+    classDef component fill:#edf8ed,color:#244824,stroke:#64a664
+    class website site
+    class home,about,consortium,news,events,contact area
+    class root,project,objectives,framework page
+    class latest,interview,paper,closing,copenhagen,hamburg,windday,bilbao,electric detail
+    class pageData,consortiumData,contactData,newsData,eventData data
+    class header,breadcrumbs,footer,cards,sharing component

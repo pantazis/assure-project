@@ -1,124 +1,174 @@
-# ASSURE HTML-to-Data Migration
+alwes read this files 
+output\assure-website.json,
+output\site-blueprint.mmd,
+output\website-content.models.ts,
+output\app-shell-layout.mmd
 
-Convert every `html-pages/*.html` file into reusable, presentation-independent site data. Use `site-links.mmd` as the sitemap reference.
+for html style referses use C:\Users\pvast\Desktop\assure-project\html-pages\home.html
 
-The purpose is to document the content and the non-technical site structure for a future application. Do not create Angular components, services, templates, styles, route configuration, scripts, reports, downloaded assets, or any other implementation files.
+Initialize a new Angular application in the current repository and create only the application structure, shared app shell, components, and routing. Do not implement real page content yet.
 
-## Required Output — Exactly Three Files
+Before making any decisions or changes, always read and use these files as the source of truth:
 
-Create only these three files under `output/`:
+- output/assure-website.json
+- output/site-blueprint.mmd
+- output/website-content.models.ts
+- output/app-shell-layout.mmd
 
-```text
-output/
-├── website-content.models.ts
-├── assure-website.json
-└── site-blueprint.mmd
-```
+Use this file only as the visual and styling reference for the original website:
 
-Do not create or modify any other generated file.
+- html-pages/home.html
 
-### 1. `website-content.models.ts`
+Goal
+Create a clean, responsive Angular foundation for the ASSURE website. Every route must use the same global app shell and preserve the component order defined in output/app-shell-layout.mmd.
 
-Define only the semantic TypeScript data model required by `assure-website.json`.
+Technical requirements
 
-The model must cover site settings, navigation, footer data, pages, metadata, routes, reusable component definitions and instances, a discriminated `PageSection` union, news, events, links, downloads, embeds, images, breadcrumbs, and contact information where evidenced by the HTML.
+1. Initialize a modern Angular application using:
+   - Standalone components
+   - Angular Router
+   - SCSS
+   - Strict TypeScript settings
+   - Accessible, semantic HTML
 
-Use explicit interfaces and union types. Do not use unnecessary `any`. Keep content separate from presentation and do not include CSS or Angular-specific implementation types.
+2. Create the global app shell in this fixed semantic order:
+   - Skip-to-content link
+   - Site header
+   - Primary navigation, including the About submenu
+   - Responsive mobile navigation control
+   - Main content area containing the router outlet
+   - Site footer
 
-### 2. `assure-website.json`
+3. Create reusable shell components, including at minimum:
+   - App shell/root component
+   - Header component
+   - Primary navigation component
+   - Mobile navigation component or responsive navigation behavior
+   - Footer component
+   - Breadcrumb component placeholder
+   - Page-layout or page-container component, if useful
 
-Store all extracted website data in one valid JSON file conforming to `website-content.models.ts`.
+4. Reproduce the general visual identity of html-pages/home.html without copying obsolete Drupal markup, Bootstrap dependencies, remote theme files, jQuery, or Drupal scripts. Use native Angular and project-owned SCSS. Match the reference’s overall characteristics:
+   - White header
+   - ASSURE logo positioned on the left
+   - Desktop navigation positioned on the right
+   - Dropdown submenu for “Σχετικά με το ASSURE”
+   - Subtle header shadow/border
+   - Constrained central content width
+   - Dark footer with three responsive areas
+   - Open Sans or a suitable local/system fallback
+   - Responsive mobile menu
 
-It must contain:
+5. Use navigation labels, hierarchy, routes, logo information, and footer data from output/assure-website.json. Do not invent alternative routes or labels.
 
-- site settings, navigation, and footer content;
-- every source page exactly once;
-- each page's ID, type, source filename, title, language, slug, route, metadata, and ordered sections;
-- all exact page content, including English, Greek, and mixed-language text;
-- reusable component definitions and the pages or sections that use them;
-- complete news list/detail and event list/detail data;
-- source-evidenced links, images, alt text, downloads, embeds, breadcrumbs, dates, calls to action, and contact details;
-- the relationships needed by `site-blueprint.mmd`.
+6. Create standalone empty page components and configure routing for every route defined by output/site-blueprint.mmd and output/app-shell-layout.mmd:
+   - /
+   - /home
+   - /about
+   - /about/project
+   - /about/objectives
+   - /about/technical-framework
+   - /consortium
+   - /news
+   - /news/latest-news
+   - /news/interview-naftemporiki
+   - /news/paper-publication
+   - /events
+   - /events/closing-event
+   - /events/windeurope-copenhagen-2023
+   - /events/wind-energy-hamburg-2022
+   - /events/global-wind-day-2022
+   - /events/windeurope-bilbao-2022
+   - /events/electric-city-copenhagen-2021
+   - /contact
 
-JSON must contain no comments, functions, `undefined`, or template literals. Use `null` or `[]` for unavailable values. Keep image references exactly as evidenced by the source; do not download, replace, or invent assets.
+7. Page components must remain intentionally empty for now:
+   - Do not render content from page.sections.
+   - Do not implement article text, news cards, event cards, consortium members, contact details, sharing links, or other page-specific content.
+   - Each page may contain only an empty semantic content container needed to verify routing and layout.
+   - Do not add placeholder text such as “Coming soon” unless required for accessibility or route verification.
 
-### 3. `site-blueprint.mmd`
+8. Keep the global shell identical across all routes:
+   - Header always appears before main.
+   - Footer always appears after main.
+   - Mobile and desktop layouts preserve the same semantic DOM order.
+   - Only the navigation presentation may change responsively.
+   - The router outlet must be inside the main content area.
 
-Create a Mermaid diagram that explains the site in clear, non-technical language.
+9. Prepare the architecture for later use of output/website-content.models.ts and output/assure-website.json, but do not implement page-content rendering in this task. Avoid unnecessary abstractions and do not build a CMS renderer yet.
 
-The diagram must show:
+10. Assets:
+   - Reuse suitable existing files from public/assets where available.
+   - Do not hotlink images, fonts, CSS, or JavaScript from the archived website.
+   - Ensure Angular asset paths work in development and production builds.
 
-- the website and its main navigation areas;
-- all routes and pages;
-- parent and child page relationships;
-- which reusable content components appear on which pages;
-- how pages and components receive content from the corresponding parts of `assure-website.json`;
-- news list-to-detail and events list-to-detail relationships.
+11. Routing behavior:
+   - Navigation must use routerLink and routerLinkActive.
+   - The logo must navigate to the root or home route.
+   - Parent and child navigation routes must work.
+   - Add a lightweight not-found route/component.
+   - Ensure direct navigation to nested routes works in the Angular development server.
 
-Use human-readable labels. This is a site blueprint for content and page relationships, not a software architecture diagram. Do not show Angular modules, services, classes, APIs, databases, build tools, or other technical implementation details.
+12. Accessibility:
+   - Include a functional skip link targeting the main content area.
+   - Use semantic header, nav, main, and footer elements.
+   - Give navigation controls accessible labels and correct expanded states.
+   - Support keyboard operation of the mobile menu and About submenu.
+   - Provide visible focus styles.
 
-## Source Processing Rules
+Suggested project organization
 
-- Read and process every `html-pages/*.html` file independently and completely.
-- Treat each HTML file as the sole truth for its content and detected language.
-- Use `site-links.mmd` only to confirm page and navigation relationships.
-- Represent every HTML source file exactly once in the JSON and retain its source filename.
-- Preserve titles, browser metadata, headings, paragraphs, lists, dates, breadcrumbs, links, downloads, embeds, images and source alt text, contact details, calls to action, navigation, and footer content.
-- Preserve all English, Greek, and mixed-language text exactly as found.
-- The source site has no language selector or translated variants. Do not create translations or language-switching data.
-- Never invent, rewrite, summarize, translate, or merge source content.
-- Keep unrelated and page-specific content separate.
-- Use raw HTML only when semantic conversion would lose meaning or content.
-- Propose a reusable component only when repeated source markup or content structure provides evidence for it.
+src/app/
+  core/
+    layout/
+      app-shell/
+      header/
+      footer/
+    navigation/
+      primary-navigation/
+  shared/
+    components/
+      breadcrumbs/
+  pages/
+    home/
+    about/
+    project/
+    objectives/
+    technical-framework/
+    consortium/
+    news/
+    news-detail/ or separate empty news detail pages
+    events/
+    event-detail/ or separate empty event detail pages
+    contact/
+    not-found/
+  app.routes.ts
 
-## Page and Route Rules
+Use route configuration and reusable page shells to avoid duplication. Separate page components are acceptable where they improve clarity, but do not duplicate app-shell markup in page templates.
 
-Assign stable, unique page IDs, slugs, and routes based only on source evidence.
+Deliverables
 
-Page types must support home, standard content, consortium, contact, news list, news detail, events list, and event detail.
+- Initialized Angular project with local dependencies
+- Standalone shared shell and navigation components
+- Responsive SCSS based on the supplied HTML reference
+- Empty routed page components for all specified routes
+- Functional desktop and mobile navigation
+- Functional global header and footer
+- Not-found route
+- Basic unit tests for routing and critical shell behavior
+- Updated README with install, development, build, and test commands
 
-Prefer these routes unless the sources require an adjustment:
+Success criteria
 
-```text
-/
-/about
-/about/project
-/about/objectives
-/about/technical-framework
-/consortium
-/news
-/news/{slug}
-/events
-/events/{slug}
-/contact
-```
+- npm install completes successfully.
+- The Angular development server starts without errors.
+- The production build succeeds.
+- Tests pass.
+- Every specified URL resolves to its intended empty page component.
+- Header, navigation, main outlet, and footer render consistently on every route.
+- Desktop and mobile navigation are usable by keyboard.
+- No page-specific content from assure-website.json is rendered yet.
+- No Drupal, jQuery, Bootstrap, or remote archived-site dependencies are introduced.
+- The implementation follows the route map and app-shell position invariants in the required Mermaid files.
 
-## Validation Before Completion
-
-Confirm that:
-
-- exactly three files exist under `output/`;
-- every source HTML file was processed separately and appears exactly once in the JSON;
-- all page IDs, slugs, and routes are unique;
-- every internal navigation target resolves to a JSON page;
-- every news item and event has its required detail data;
-- all source content and Greek characters are preserved;
-- reusable components are supported by repeated source evidence;
-- the JSON is valid and conforms to the TypeScript model;
-- every page, route, component, and JSON relationship in the Mermaid blueprint matches `assure-website.json`;
-- the Mermaid file is understandable as a non-technical site blueprint;
-- no Angular implementation or unrequested output was created.
-
-## Workflow
-
-1. Audit all HTML files and `site-links.mmd` without generating output.
-2. Define the data model in `website-content.models.ts`.
-3. Extract every page independently into `assure-website.json`.
-4. Create `site-blueprint.mmd` from the completed JSON relationships.
-5. Validate all three files together and correct inconsistencies.
-
-Keep progress concise. Write full extracted content only to the required files, not into chat.
-
-## Final Response
-
-Briefly confirm that every HTML file was read separately and that exactly the three required files were created. Summarize the data model, JSON page/component content, and non-technical Mermaid site blueprint. Mention any source ambiguity or unsafe raw-HTML conversion, but do not create a separate report.
+Before finishing, review the implementation for readability, modularity, accessibility, testability, route completeness, and consistency with the required source files.

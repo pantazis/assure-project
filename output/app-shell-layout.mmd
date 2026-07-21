@@ -1,0 +1,173 @@
+flowchart TB
+    %% ASSURE app-shell contract.
+    %% Solid arrows define rendering order; dotted arrows define data or template usage.
+
+    subgraph shell["GLOBAL APP SHELL — identical order on every route"]
+        direction TB
+        app["App root"]
+        skip["1. Skip link / accessibility entry"]
+
+        subgraph header["2. Site header — fixed shell position"]
+            direction LR
+            brand["Brand and logo<br/>site.name + site.logo"]
+            primaryNav["Primary navigation<br/>navigation.primary"]
+            aboutMenu["About submenu<br/>navigation.primary[].children"]
+            mobileToggle["Mobile navigation control<br/>responsive presentation only"]
+            brand --> primaryNav --> aboutMenu
+            primaryNav -. "collapses to" .-> mobileToggle
+        end
+
+        subgraph main["3. Main content — page template outlet"]
+            direction TB
+            breadcrumbSlot["3.1 Breadcrumbs slot<br/>page.breadcrumbs<br/>inner pages only"]
+            titleSlot["3.2 Page title<br/>page.title"]
+            sectionSlot["3.3 Ordered content sections<br/>page.sections[] in source order"]
+            shareSlot["3.4 Sharing links<br/>page.shareLinks<br/>detail pages only"]
+            breadcrumbSlot --> titleSlot --> sectionSlot --> shareSlot
+        end
+
+        subgraph footer["4. Site footer — fixed shell position"]
+            direction LR
+            funding["Funding message and image<br/>footer.fundingText + fundingImage"]
+            legal["Legal / privacy link<br/>footer.legalLink"]
+            copyright["Copyright<br/>footer.copyright"]
+            funding --> legal --> copyright
+        end
+
+        app --> skip --> header --> main --> footer
+    end
+
+    subgraph rules["POSITION INVARIANTS"]
+        direction TB
+        rule1["Header always precedes main content"]
+        rule2["Footer always follows main content"]
+        rule3["Breadcrumbs, when present, precede the page title"]
+        rule4["Sections render in page.sections[] order"]
+        rule5["Sharing, when present, follows all article sections"]
+        rule6["Desktop and mobile preserve semantic order;<br/>only navigation layout changes"]
+        rule1 --> rule2 --> rule3 --> rule4 --> rule5 --> rule6
+    end
+
+    shell -. "must satisfy" .-> rules
+
+    subgraph templates["PAGE-TYPE TEMPLATES — inserted only inside the main outlet"]
+        direction LR
+
+        subgraph homeTemplate["HOME TEMPLATE"]
+            direction TB
+            homeTitle["Page title / accessible heading"]
+            homeRich["Rich-text sections<br/>ContentBlock sequence"]
+            homeTitle --> homeRich
+        end
+
+        subgraph standardTemplate["STANDARD TEMPLATE"]
+            direction TB
+            standardCrumbs["Breadcrumbs"]
+            standardTitle["Page title"]
+            standardContent["Rich text or link list<br/>according to section.type"]
+            standardCrumbs --> standardTitle --> standardContent
+        end
+
+        subgraph consortiumTemplate["CONSORTIUM TEMPLATE"]
+            direction TB
+            consortiumCrumbs["Breadcrumbs"]
+            consortiumTitle["Page title"]
+            memberList["Consortium member list"]
+            memberCard["Repeated member card<br/>logo → name/country → blocks → website"]
+            consortiumCrumbs --> consortiumTitle --> memberList --> memberCard
+        end
+
+        subgraph contactTemplate["CONTACT TEMPLATE"]
+            direction TB
+            contactCrumbs["Breadcrumbs"]
+            contactTitle["Page title"]
+            contactList["Contact details list"]
+            contactCard["Repeated contact card<br/>heading → identity/roles → organization<br/>→ email/telephone/fax → address"]
+            contactCrumbs --> contactTitle --> contactList --> contactCard
+        end
+
+        subgraph listTemplate["NEWS / EVENTS LIST TEMPLATE"]
+            direction TB
+            listCrumbs["Breadcrumbs"]
+            listTitle["Page title"]
+            datedList["Ordered dated-content list"]
+            datedCard["Repeated item card<br/>date → title → summary → detail link"]
+            listCrumbs --> listTitle --> datedList --> datedCard
+        end
+
+        subgraph detailTemplate["NEWS / EVENT DETAIL TEMPLATE"]
+            direction TB
+            detailCrumbs["Breadcrumbs"]
+            detailTitle["Page title"]
+            detailBody["Rich-text blocks in source order<br/>heading / paragraph / list / image / download"]
+            detailShare["Sharing links<br/>LinkedIn / Twitter"]
+            detailCrumbs --> detailTitle --> detailBody --> detailShare
+        end
+    end
+
+    main -. "type: home" .-> homeTemplate
+    main -. "type: standard" .-> standardTemplate
+    main -. "type: consortium" .-> consortiumTemplate
+    main -. "type: contact" .-> contactTemplate
+    main -. "type: news-list or events-list" .-> listTemplate
+    main -. "type: news-detail or event-detail" .-> detailTemplate
+
+    subgraph routeMap["ROUTE → TEMPLATE MAP (all pages in assure-website.json)"]
+        direction TB
+        homeRoutes["HOME<br/>/ · /home"]
+        standardRoutes["STANDARD<br/>/about<br/>/about/project<br/>/about/objectives<br/>/about/technical-framework"]
+        consortiumRoutes["CONSORTIUM<br/>/consortium"]
+        contactRoutes["CONTACT<br/>/contact"]
+        listRoutes["DATED LISTS<br/>/news · /events"]
+        newsDetailRoutes["NEWS DETAILS<br/>/news/latest-news<br/>/news/interview-naftemporiki<br/>/news/paper-publication"]
+        eventDetailRoutes["EVENT DETAILS<br/>/events/closing-event<br/>/events/windeurope-copenhagen-2023<br/>/events/wind-energy-hamburg-2022<br/>/events/global-wind-day-2022<br/>/events/windeurope-bilbao-2022<br/>/events/electric-city-copenhagen-2021"]
+    end
+
+    homeRoutes -.-> homeTemplate
+    standardRoutes -.-> standardTemplate
+    consortiumRoutes -.-> consortiumTemplate
+    contactRoutes -.-> contactTemplate
+    listRoutes -.-> listTemplate
+    newsDetailRoutes -.-> detailTemplate
+    eventDetailRoutes -.-> detailTemplate
+
+    subgraph visibility["SLOT VISIBILITY BY PAGE TYPE"]
+        direction LR
+        allPages["ALL PAGES<br/>Header · title/content · footer"]
+        homePages["HOME ONLY<br/>Breadcrumbs hidden<br/>Sharing hidden"]
+        innerPages["INNER PAGES<br/>Breadcrumbs visible"]
+        listPages["LIST PAGES<br/>Dated cards visible<br/>Sharing hidden"]
+        detailPages["DETAIL PAGES<br/>Rich content + sharing visible"]
+    end
+
+    allPages -.-> header
+    allPages -.-> footer
+    homePages -.-> homeTemplate
+    innerPages -.-> breadcrumbSlot
+    listPages -.-> listTemplate
+    detailPages -.-> shareSlot
+
+    subgraph responsive["RESPONSIVE POSITION CONTRACT"]
+        direction TB
+        desktop["Desktop<br/>Brand and navigation share the header row<br/>Content uses the selected page template"]
+        mobile["Mobile<br/>Brand and menu control stay in header<br/>Expanded navigation stays before main<br/>Main slots and footer keep the same order"]
+        desktop -. "same semantic DOM order" .-> mobile
+    end
+
+    header -.-> responsive
+    main -.-> responsive
+    footer -.-> responsive
+
+    classDef shellNode fill:#173f5f,color:#fff,stroke:#0b273c,stroke-width:2px
+    classDef shared fill:#dff2fa,color:#123b5d,stroke:#2f80a8
+    classDef slot fill:#edf8ed,color:#244824,stroke:#64a664
+    classDef conditional fill:#fff7df,color:#4a3a00,stroke:#d9aa2b
+    classDef template fill:#f2eefb,color:#35265b,stroke:#8467b4
+    classDef rule fill:#f7f7f7,color:#252525,stroke:#777
+
+    class app shellNode
+    class skip,brand,primaryNav,aboutMenu,mobileToggle,funding,legal,copyright shared
+    class breadcrumbSlot,titleSlot,sectionSlot,shareSlot slot
+    class homeTitle,homeRich,standardCrumbs,standardTitle,standardContent,consortiumCrumbs,consortiumTitle,memberList,memberCard,contactCrumbs,contactTitle,contactList,contactCard,listCrumbs,listTitle,datedList,datedCard,detailCrumbs,detailTitle,detailBody,detailShare template
+    class homeRoutes,standardRoutes,consortiumRoutes,contactRoutes,listRoutes,newsDetailRoutes,eventDetailRoutes conditional
+    class allPages,homePages,innerPages,listPages,detailPages,desktop,mobile,rule1,rule2,rule3,rule4,rule5,rule6 rule
