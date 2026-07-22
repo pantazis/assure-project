@@ -1,17 +1,306 @@
 .html-content {
-  max-width: 100%;
+  width: 100%;
+  max-width: 92ch;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
 }
 
-.html-content > h4:nth-of-type(2) {
-  text-align: center;
+.html-content > :first-child {
+  margin-top: 0;
 }
 
-.html-content figure {
-  display: flex;
-  justify-content: center;
-  margin: 32px 0;
+.html-content > * + * {
+  margin-top: 20px;
+}
+
+.html-content h2,
+.html-content h3,
+.html-content h4 {
+  margin-bottom: 12px;
+  color: var(--color-ink);
+}
+
+.html-content h2 {
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.html-content h2::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 52px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--color-brand-secondary);
+  content: '';
+}
+
+.html-content p {
+  max-width: 82ch;
+}
+
+.html-content strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.html-content a {
+  font-weight: 600;
+}
+
+.html-content ul,
+.html-content ol {
+  max-width: 84ch;
+  padding-left: 24px;
+}
+
+.html-content li {
+  padding-left: 6px;
 }
 
 .html-content li + li {
-  margin-top: 8px;
+  margin-top: 10px;
+}
+
+.html-content li::marker {
+  color: var(--color-brand);
+  font-weight: 700;
+}
+
+.html-content figure,
+.html-content p:has(> img) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  max-width: 100%;
+  margin: 32px 0;
+}
+
+.html-content figure img,
+.html-content p > img {
+  width: auto;
+  max-width: min(100%, 720px);
+  max-height: 680px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  object-fit: contain;
+}
+
+.html-content p:has(> img + img) > img {
+  width: min(100%, 420px);
+  flex: 1 1 320px;
+}
+
+.html-content figcaption {
+  flex-basis: 100%;
+  color: var(--color-muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Navigation page */
+.html-content .content-link-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  max-width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.html-content .content-link-list li {
+  margin: 0;
+  padding: 0;
+}
+
+.html-content .content-link-list a {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  border: 1px solid var(--color-line);
+  border-left: 4px solid var(--color-brand-secondary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-soft);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.html-content .content-link-list a::after {
+  color: var(--color-brand);
+  font-size: 24px;
+  line-height: 1;
+  content: '›';
+}
+
+.html-content .content-link-list a:hover {
+  border-color: var(--color-brand-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* News and event listing cards */
+.html-content .content-card {
+  position: relative;
+  margin-bottom: 24px;
+  padding: 28px 30px;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-surface) 70%, var(--color-surface-soft));
+  box-shadow: var(--shadow-sm);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.html-content .content-card:hover {
+  border-color: var(--color-brand-secondary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.html-content .content-card h2 {
+  margin: 0 0 8px;
+  padding: 0;
+  font-size: clamp(21px, 2.4vw, 26px);
+}
+
+.html-content .content-card h2::after {
+  display: none;
+}
+
+.html-content .content-card h2 a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.html-content .content-card h2 a:hover {
+  color: var(--color-brand-strong);
+}
+
+.html-content .content-card time {
+  display: inline-flex;
+  margin-bottom: 16px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-brand-soft);
+  color: var(--color-brand-strong);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.html-content .content-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Consortium profiles */
+.html-content .member-card {
+  display: grid;
+  grid-template-columns: minmax(150px, 190px) minmax(0, 1fr);
+  gap: 8px 32px;
+  margin-bottom: 32px;
+  padding: 32px;
+  border: 1px solid var(--color-line);
+  border-top: 4px solid var(--color-brand-secondary);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.html-content .member-card figure {
+  grid-row: 1 / span 20;
+  align-self: start;
+  min-height: 140px;
+  margin: 0;
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-soft);
+}
+
+.html-content .member-card figure img {
+  max-height: 120px;
+  border: 0;
+  box-shadow: none;
+}
+
+.html-content .member-card h2,
+.html-content .member-card p {
+  grid-column: 2;
+}
+
+.html-content .member-card h2 {
+  margin-top: 0;
+  font-size: clamp(22px, 2.5vw, 28px);
+}
+
+.html-content .member-card p:last-child a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--color-brand);
+  color: #fff;
+  text-decoration: none;
+}
+
+.html-content .member-card p:last-child a:hover {
+  background: var(--color-brand-strong);
+}
+
+/* Contact page */
+.html-content .contact-card {
+  margin-bottom: 24px;
+  padding: 28px;
+  border: 1px solid var(--color-line);
+  border-left: 5px solid var(--color-brand-secondary);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-soft);
+  box-shadow: var(--shadow-sm);
+}
+
+.html-content .contact-card h2 {
+  margin-top: 0;
+}
+
+.html-content .contact-card p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  .html-content > * + * {
+    margin-top: 16px;
+  }
+
+  .html-content .content-card,
+  .html-content .member-card,
+  .html-content .contact-card {
+    padding: 22px 20px;
+  }
+
+  .html-content .member-card {
+    display: block;
+  }
+
+  .html-content .member-card figure {
+    min-height: 0;
+    margin-bottom: 24px;
+  }
+
+  .html-content .member-card figure img {
+    max-height: 100px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .html-content .content-link-list a,
+  .html-content .content-card {
+    transition: none;
+  }
 }

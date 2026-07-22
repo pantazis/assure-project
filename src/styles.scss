@@ -1,24 +1,39 @@
+@use './app/shared/components/html-content/html-content';
+
 :root {
-  --color-ink: #252525;
-  --color-muted: #687078;
-  --color-brand: #123b5d;
-  --color-brand-secondary: #2f80a8;
-  --color-line: #c8ccdf;
-  --color-focus: #ffbf47;
+  /* Palette preserved from the original ASSURE Drupal/Aurum lime theme. */
+  --color-ink: #21252b;
+  --color-text: #4c5355;
+  --color-muted: #737a81;
+  --color-brand: #639a33;
+  --color-brand-strong: #437224;
+  --color-brand-secondary: #86ba41;
+  --color-brand-soft: #eaf1e0;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f8fafa;
+  --color-line: #d5d9dd;
+  --color-line-light: #eef1f1;
+  --color-focus: #fcd746;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+  --shadow-md: 0 12px 32px rgba(33, 37, 43, 0.1);
+  --radius-sm: 4px;
+  --radius-md: 10px;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; color: var(--color-ink); background: #fff; font: 400 16px/1.6 'Open Sans', Arial, sans-serif; }
+body { margin: 0; color: var(--color-text); background: var(--color-surface); font: 400 16px/1.7 'Open Sans', Arial, sans-serif; }
 .wrap { width: min(calc(100% - 32px), 1170px); margin-inline: auto; }
-h1 { margin: 0 0 24px; font-size: 40px; line-height: 1.2; }
-h2 { font-size: 32px; }
-h3 { font-size: 24px; }
-h4 { font-size: 18px; }
+h1, h2, h3, h4 { color: var(--color-ink); text-wrap: balance; }
+h1 { margin: 0 0 24px; font-size: clamp(32px, 4vw, 40px); line-height: 1.2; }
+h2 { font-size: clamp(26px, 3vw, 32px); line-height: 1.25; }
+h3 { font-size: clamp(21px, 2.5vw, 24px); line-height: 1.3; }
+h4 { font-size: 18px; line-height: 1.4; }
 p, ul, ol { margin-block: 0 16px; }
-a { color: var(--color-brand-secondary); text-decoration: none; }
-a:hover { text-decoration: underline; }
+a { color: var(--color-brand-strong); text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 3px; }
+a:hover { color: var(--color-brand); text-decoration: underline; }
 img { display: block; max-width: 100%; height: auto; }
+::selection { color: var(--color-ink); background: var(--color-brand-soft); }
 app-content-blocks{
  img {  width: 100%;max-width:500px; }
 p, ul, li {
@@ -28,4 +43,4 @@ p, ul, li {
 :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-@media (max-width: 767px) { h1 { font-size: 32px; } }
+@media (max-width: 767px) { body { line-height: 1.65; } }
