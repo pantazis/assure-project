@@ -1,9 +1,13 @@
 :host { display: block; }
 .site-footer { padding-block: 40px; border-top: 3px solid var(--color-line); background: var(--color-brand); color: #fff; }
-.site-footer__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr; align-items: center; gap: 32px; }
+.site-footer__grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 32px; }
 .site-footer p { margin: 0; }
 .site-footer a { color: #fff; }
 .site-footer__funding { display: flex; align-items: center; gap: 12px; }
 .site-footer__funding img { flex: 0 0 auto; }
 .site-footer__copyright { text-align: right; }
-@media (max-width: 767px) { .site-footer__grid { grid-template-columns: 1fr; } .site-footer__copyright { text-align: left; } }
+@media (max-width: 767px) {
+  .site-footer { padding-block: 32px; }
+  .site-footer__grid { grid-template-columns: 1fr; gap: 20px; }
+  .site-footer__copyright { text-align: left; }
+}

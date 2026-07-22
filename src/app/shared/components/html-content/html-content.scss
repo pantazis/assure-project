@@ -1,6 +1,6 @@
 .html-content {
   width: 100%;
-  max-width: 92ch;
+  max-width: var(--content-max-width);
   color: var(--color-text);
   overflow-wrap: anywhere;
 }
@@ -37,7 +37,7 @@
 }
 
 .html-content p {
-  max-width: 82ch;
+  max-width: 100%;
 }
 
 .html-content strong {
@@ -51,7 +51,7 @@
 
 .html-content ul,
 .html-content ol {
-  max-width: 84ch;
+  max-width: 100%;
   padding-left: 24px;
 }
 
