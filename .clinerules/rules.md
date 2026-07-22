@@ -8,24 +8,19 @@ Always read these files:
 [*] Create Angular app
 [*] Create reusable components
 [*] Create app shell
-[*] Create routing with and page componets no HTML ,chinge  nav links if rquierd
-Migrate page HTML and required data one route at a time, in the checklist order below. For every route:
-    - Read its matching source file in `html-pages/` and use the required `output/` reference files above.
-    - Store only the page body as a typed TypeScript HTML template string in `src/app/core/data/page-content.data.ts`.
-    - Preserve semantic content such as headings, paragraphs, `<strong>`, lists, links, and figures.
-    - Exclude Drupal headers, footers, scripts, source IDs/classes, inline styles, and event-handler attributes.
-    - Replace remote image URLs with local `/assets/images/...` paths and verify that every referenced asset exists.
-    - Render the content through the reusable `HtmlContent` component using Angular `[innerHTML]` sanitization; never bypass Angular security.
-    - Add only controlled component or page SCSS required for the current page.
-    - Connect and validate only the current route. Run the production build and content checks, then mark its item `[*]` before starting the next route.
-    - Do not change page content for routes whose checklist items are still incomplete.
+[*] Create routing with page components containing no page HTML; 
+    - use `src/app/core/data/page-content.data.ts`.
+    - Append each HTML source file's data to its corresponding route/page entry.
+    - Process only 3 unchecked `[ ]` page entries per execution.
+
+
 
  [*] `/` → `root.html`
  [*] `/home` → `home.html`
  [*] `/Terms_of_Service_and_Privacy_Policy` → `Terms_of_Service_and_Privacy_Policy.html`
- [ ] `/about` → `about.html`
- [ ] `/about/project` → `project.html`
- [ ] `/about/objectives` → `objectives.html`
+ [ ]`/about` → `about.html`
+ [ ]`/about/project` → `project.html`
+ [ ]`/about/objectives` → `objectives.html`
  [ ] `/about/technical-framework` → `framework.html`
  [ ] `/consortium` → `consortium.html`
  [ ] `/contact` → `contact.html`
