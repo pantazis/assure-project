@@ -1,0 +1,24 @@
+{
+  "routes": {
+    "/": {},
+    "/Terms_of_Service_and_Privacy_Policy": {},
+    "/about": {},
+    "/about/objectives": {},
+    "/about/project": {},
+    "/about/technical-framework": {},
+    "/consortium": {},
+    "/contact": {},
+    "/events": {},
+    "/events/closing-event": {},
+    "/events/electric-city-copenhagen-2021": {},
+    "/events/global-wind-day-2022": {},
+    "/events/wind-energy-hamburg-2022": {},
+    "/events/windeurope-bilbao-2022": {},
+    "/events/windeurope-copenhagen-2023": {},
+    "/home": {},
+    "/news": {},
+    "/news/interview-naftemporiki": {},
+    "/news/latest-news": {},
+    "/news/paper-publication": {}
+  }
+}
