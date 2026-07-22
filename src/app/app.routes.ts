@@ -8,7 +8,8 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home').then((page) => page.HomePage),
+    redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: 'Terms_of_Service_and_Privacy_Policy',

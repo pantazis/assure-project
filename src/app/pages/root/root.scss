@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .rich {
-  max-width: 1170px;
+  max-width: var(--content-max-width);
   margin-inline: auto;
 }
 
