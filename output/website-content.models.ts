@@ -3,6 +3,7 @@ export type LanguageCode = "en" | "el" | "mixed";
 export type PageType =
   | "home"
   | "standard"
+  | "legal"
   | "consortium"
   | "contact"
   | "news-list"

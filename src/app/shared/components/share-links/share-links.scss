@@ -1,0 +1,4 @@
+.share, .share ul { display: flex; align-items: center; gap: 16px; }
+.share { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-line); }
+.share ul { margin: 0; padding: 0; list-style: none; }
+.share a { display: inline-flex; min-height: 44px; align-items: center; font-weight: 600; }

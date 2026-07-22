@@ -1,0 +1,45 @@
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" routerLink="/" aria-label="ASSURE αρχική σελίδα" (click)="closeNavigation()">
+      <img src="/assets/images/assure-logo-v4.png" alt="ASSURE" />
+    </a>
+
+    <button class="nav-toggle" type="button" [attr.aria-expanded]="mobileMenuOpen()"
+      aria-controls="primary-navigation" [attr.aria-label]="mobileMenuOpen() ? 'Κλείσιμο μενού' : 'Άνοιγμα μενού'"
+      (click)="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="primary-navigation" class="primary-nav" [class.primary-nav--open]="mobileMenuOpen()"
+      aria-label="Κύρια πλοήγηση">
+      <ul class="primary-nav__list">
+        @for (item of navigation; track item.route) {
+          <li class="primary-nav__item" [class.primary-nav__item--parent]="item.children?.length">
+            <div class="primary-nav__link-row">
+              <a class="primary-nav__link" [routerLink]="item.route"
+                routerLinkActive="primary-nav__link--active"
+                [routerLinkActiveOptions]="{ exact: item.route === '/home' }" #activeLink="routerLinkActive"
+                [attr.aria-current]="activeLink.isActive ? 'page' : null" (click)="closeNavigation()">
+                {{ item.label }}
+              </a>
+              @if (item.children?.length) {
+                <button class="submenu-toggle" type="button" [attr.aria-expanded]="aboutMenuOpen()"
+                  aria-controls="about-submenu" aria-label="Εναλλαγή υπομενού Σχετικά με το ASSURE"
+                  (click)="toggleAboutMenu()"><span aria-hidden="true">⌄</span></button>
+              }
+            </div>
+            @if (item.children?.length) {
+              <ul id="about-submenu" class="submenu" [class.submenu--open]="aboutMenuOpen()">
+                @for (child of item.children; track child.route) {
+                  <li><a class="submenu__link" [routerLink]="child.route" routerLinkActive="submenu__link--active"
+                    #childActiveLink="routerLinkActive" [attr.aria-current]="childActiveLink.isActive ? 'page' : null"
+                    (click)="closeNavigation()">{{ child.label }}</a></li>
+                }
+              </ul>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

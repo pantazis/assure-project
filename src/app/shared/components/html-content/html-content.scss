@@ -1,0 +1,17 @@
+.html-content {
+  max-width: 78ch;
+}
+
+.html-content > h4:nth-of-type(2) {
+  text-align: center;
+}
+
+.html-content figure {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.html-content li + li {
+  margin-top: 8px;
+}

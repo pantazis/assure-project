@@ -1,0 +1,8 @@
+<nav class="share" aria-label="Share">
+  <span>Share:</span>
+  <ul>
+    @for (link of links(); track link.href) {
+      <li><a [href]="link.href" target="_blank" rel="noopener">{{ link.label }}</a></li>
+    }
+  </ul>
+</nav>

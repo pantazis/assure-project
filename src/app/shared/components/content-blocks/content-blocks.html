@@ -1,0 +1,33 @@
+<section class="rich">
+  @for (block of blocks(); track $index) {
+    @switch (block.type) {
+      @case ('heading') {
+        @switch (block.level) {
+          @case (2) { <h2>{{ block.text }}</h2> }
+          @case (3) { <h3>{{ block.text }}</h3> }
+          @case (4) { <h4>{{ block.text }}</h4> }
+          @case (5) { <h5>{{ block.text }}</h5> }
+          @default { <h6>{{ block.text }}</h6> }
+        }
+      }
+      @case ('paragraph') {
+        <p>{{ block.text }}</p>
+      }
+      @case ('list') {
+        @if (block.ordered) {
+          <ol>@for (item of block.items; track $index) { <li>{{ item.text }}</li> }</ol>
+        } @else {
+          <ul>@for (item of block.items; track $index) { <li>{{ item.text }}</li> }</ul>
+        }
+      }
+      @case ('image') {
+        <figure>
+          <img [src]="block.image.src" [alt]="block.image.alt" [width]="block.image.width" [height]="block.image.height" />
+        </figure>
+      }
+      @case ('download') {
+        <p><a class="download" [href]="block.download.href" download>{{ block.download.label }}</a></p>
+      }
+    }
+  }
+</section>

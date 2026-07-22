@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-ink: #252525;
+  --color-muted: #687078;
+  --color-brand: #123b5d;
+  --color-brand-secondary: #2f80a8;
+  --color-line: #c8ccdf;
+  --color-focus: #ffbf47;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; color: var(--color-ink); background: #fff; font: 400 16px/1.6 'Open Sans', Arial, sans-serif; }
+.wrap { width: min(calc(100% - 32px), 1170px); margin-inline: auto; }
+h1 { margin: 0 0 24px; font-size: 40px; line-height: 1.2; }
+h2 { font-size: 32px; }
+h3 { font-size: 24px; }
+h4 { font-size: 18px; }
+p, ul, ol { margin-block: 0 16px; }
+a { color: var(--color-brand-secondary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { display: block; max-width: 100%; height: auto; }
+app-content-blocks{
+ img {  width: 100%;max-width:500px; }
+p, ul, li {
+	text-align: left;
+}
+}
+:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+@media (max-width: 767px) { h1 { font-size: 32px; } }

@@ -1,0 +1,19 @@
+<footer class="site-footer">
+  <div class="wrap site-footer__grid">
+    <div class="funding">
+      <img
+        [src]="content().fundingImage.src"
+        [alt]="content().fundingImage.alt"
+        [width]="content().fundingImage.width"
+        [height]="content().fundingImage.height"
+      />
+      <span>{{ content().fundingText }}</span>
+    </div>
+    <a
+      [href]="content().legalLink.href"
+      [target]="content().legalLink.opensInNewWindow ? '_blank' : '_self'"
+      [attr.rel]="content().legalLink.opensInNewWindow ? 'noopener' : null"
+    >{{ content().legalLink.label }}</a>
+    <p>{{ content().copyright }}</p>
+  </div>
+</footer>

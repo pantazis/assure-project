@@ -31,6 +31,7 @@
 `nav.share[aria-label=Share]>ul>li*2>a[target=_blank][rel=noopener]`; after detail body only.
 `section.rich>h2+p+ul>li^figure>img+figcaption`; source block order; no decorative div hierarchy.
 `footer: grid 3 cols;gap:32;py:40;bg:c.brand;c:#fff; border-top:3 solid c.line`; `@<768:1 col`.
+`footer legal: a[routerLink='/Terms_of_Service_and_Privacy_Policy']`; internal same-window navigation; no absolute `assure-project.eu` URL, `_blank`, or external-link treatment.
 
 ## E:NAV
 `li.nav__item--parent>a+button.sub-toggle[aria-expanded=false][aria-controls=about-menu]^ul#about-menu.sub>li*3>a`
@@ -41,6 +42,7 @@
 ## P
 `home: h1.sr-only+section.rich`; no crumbs/share.
 `standard: crumbs+h1+(.rich|ul.link-list)`.
+`legal: crumbs+h1+section.rich`; render heading/paragraph/list blocks in source order; no share.
 `consortium: crumbs+h1+div.member-list>article.member*`.
 `contact: crumbs+h1+div.contact-list>article.contact*`.
 `news-list|events-list: crumbs+h1+div.card-list>article.card*`; newest/source order.
@@ -48,6 +50,7 @@
 
 ## R
 `home=/|/home;standard=/about|/about/project|/about/objectives|/about/technical-framework`
+`legal=/Terms_of_Service_and_Privacy_Policy;footer.legalLink=>page-terms-privacy`
 `consortium=/consortium;contact=/contact;lists=/news|/events`
 `newsD=/news/latest-news|/news/interview-naftemporiki|/news/paper-publication`
 `eventD=/events/closing-event|/events/windeurope-copenhagen-2023|/events/wind-energy-hamburg-2022|/events/global-wind-day-2022|/events/windeurope-bilbao-2022|/events/electric-city-copenhagen-2021`

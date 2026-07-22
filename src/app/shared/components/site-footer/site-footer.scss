@@ -1,0 +1,8 @@
+:host { display: block; }
+.site-footer { padding: 40px 0; border-top: 3px solid var(--color-line); background: var(--color-brand); color: #fff; }
+.site-footer__grid { display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; gap: 32px; }
+.site-footer a { color: #fff; }
+.site-footer p { margin: 0; }
+.funding { display: flex; align-items: center; gap: 12px; }
+.funding img { flex: none; }
+@media (max-width: 767px) { .site-footer__grid { grid-template-columns: 1fr; } }

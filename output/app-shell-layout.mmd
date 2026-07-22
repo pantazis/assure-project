@@ -29,7 +29,7 @@ flowchart TB
         subgraph footer["4. Site footer — fixed shell position"]
             direction LR
             funding["Funding message and image<br/>footer.fundingText + fundingImage"]
-            legal["Legal / privacy link<br/>footer.legalLink"]
+            legal["Legal / privacy link<br/>footer.legalLink<br/>internal → page-terms-privacy"]
             copyright["Copyright<br/>footer.copyright"]
             funding --> legal --> copyright
         end
@@ -66,6 +66,14 @@ flowchart TB
             standardTitle["Page title"]
             standardContent["Rich text or link list<br/>according to section.type"]
             standardCrumbs --> standardTitle --> standardContent
+        end
+
+        subgraph legalTemplate["LEGAL TEMPLATE"]
+            direction TB
+            legalCrumbs["Breadcrumbs"]
+            legalTitle["Page title"]
+            legalContent["Ordered legal/privacy rich text<br/>heading / paragraph / list"]
+            legalCrumbs --> legalTitle --> legalContent
         end
 
         subgraph consortiumTemplate["CONSORTIUM TEMPLATE"]
@@ -107,6 +115,7 @@ flowchart TB
 
     main -. "type: home" .-> homeTemplate
     main -. "type: standard" .-> standardTemplate
+    main -. "type: legal" .-> legalTemplate
     main -. "type: consortium" .-> consortiumTemplate
     main -. "type: contact" .-> contactTemplate
     main -. "type: news-list or events-list" .-> listTemplate
@@ -116,6 +125,7 @@ flowchart TB
         direction TB
         homeRoutes["HOME<br/>/ · /home"]
         standardRoutes["STANDARD<br/>/about<br/>/about/project<br/>/about/objectives<br/>/about/technical-framework"]
+        legalRoutes["LEGAL<br/>/Terms_of_Service_and_Privacy_Policy"]
         consortiumRoutes["CONSORTIUM<br/>/consortium"]
         contactRoutes["CONTACT<br/>/contact"]
         listRoutes["DATED LISTS<br/>/news · /events"]
@@ -125,6 +135,7 @@ flowchart TB
 
     homeRoutes -.-> homeTemplate
     standardRoutes -.-> standardTemplate
+    legalRoutes -.-> legalTemplate
     consortiumRoutes -.-> consortiumTemplate
     contactRoutes -.-> contactTemplate
     listRoutes -.-> listTemplate
@@ -142,6 +153,7 @@ flowchart TB
 
     allPages -.-> header
     allPages -.-> footer
+    legal -. "same-window internal navigation" .-> legalTemplate
     homePages -.-> homeTemplate
     innerPages -.-> breadcrumbSlot
     listPages -.-> listTemplate
@@ -168,6 +180,6 @@ flowchart TB
     class app shellNode
     class skip,brand,primaryNav,aboutMenu,mobileToggle,funding,legal,copyright shared
     class breadcrumbSlot,titleSlot,sectionSlot,shareSlot slot
-    class homeTitle,homeRich,standardCrumbs,standardTitle,standardContent,consortiumCrumbs,consortiumTitle,memberList,memberCard,contactCrumbs,contactTitle,contactList,contactCard,listCrumbs,listTitle,datedList,datedCard,detailCrumbs,detailTitle,detailBody,detailShare template
-    class homeRoutes,standardRoutes,consortiumRoutes,contactRoutes,listRoutes,newsDetailRoutes,eventDetailRoutes conditional
+    class homeTitle,homeRich,standardCrumbs,standardTitle,standardContent,legalCrumbs,legalTitle,legalContent,consortiumCrumbs,consortiumTitle,memberList,memberCard,contactCrumbs,contactTitle,contactList,contactCard,listCrumbs,listTitle,datedList,datedCard,detailCrumbs,detailTitle,detailBody,detailShare template
+    class homeRoutes,standardRoutes,legalRoutes,consortiumRoutes,contactRoutes,listRoutes,newsDetailRoutes,eventDetailRoutes conditional
     class allPages,homePages,innerPages,listPages,detailPages,desktop,mobile,rule1,rule2,rule3,rule4,rule5,rule6 rule

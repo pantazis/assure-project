@@ -17,6 +17,7 @@ flowchart TD
     website --> news
     website --> events
     website --> contact
+    website --> termsPrivacy["Terms of Service and Privacy Policy<br/>/Terms_of_Service_and_Privacy_Policy"]
 
     about --> project["Το Έργο<br/>/about/project"]
     about --> objectives["Στόχοι<br/>/about/objectives"]
@@ -51,7 +52,7 @@ flowchart TD
         eventData["events.items<br/>dates, summaries and detail relationships"]
     end
 
-    root & home & about & project & objectives & framework --> pageData
+    root & home & about & project & objectives & framework & termsPrivacy --> pageData
     consortium --> consortiumData
     contact --> contactData
     news & latest & interview & paper --> newsData
@@ -60,13 +61,14 @@ flowchart TD
     subgraph shared["Reusable content components"]
         header["Site header and primary navigation<br/>navigation.primary"]
         breadcrumbs["Breadcrumb trail<br/>each page's breadcrumbs"]
-        footer["Funding and legal footer<br/>footer"]
+        footer["Funding and legal footer<br/>footer<br/>legalLink targets page-terms-privacy internally"]
         cards["Dated content cards<br/>news.items and events.items"]
         sharing["Article sharing links<br/>each detail page's shareLinks"]
     end
 
     header -. "appears on every page" .-> website
     footer -. "appears on every page" .-> website
+    footer -. "internal legal link" .-> termsPrivacy
     breadcrumbs -. "appears on inner pages" .-> pageData
     cards -. "appears on list pages" .-> news
     cards -.-> events
@@ -88,7 +90,7 @@ flowchart TD
     classDef component fill:#edf8ed,color:#244824,stroke:#64a664
     class website site
     class home,about,consortium,news,events,contact area
-    class root,project,objectives,framework page
+    class root,project,objectives,framework,termsPrivacy page
     class latest,interview,paper,closing,copenhagen,hamburg,windday,bilbao,electric detail
     class pageData,consortiumData,contactData,newsData,eventData data
     class header,breadcrumbs,footer,cards,sharing component

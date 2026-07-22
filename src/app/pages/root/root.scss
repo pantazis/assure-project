@@ -1,0 +1,42 @@
+:host {
+  display: block;
+}
+
+.home-page {
+  padding-block: 8px;
+}
+
+:host ::ng-deep .rich {
+  max-width: 92ch;
+  margin-inline: auto;
+}
+
+:host ::ng-deep .rich h4:first-child {
+  margin-top: 0;
+  color: var(--color-brand);
+}
+
+:host ::ng-deep .rich h4:nth-child(2) {
+  margin-block: 32px 24px;
+  color: var(--color-brand);
+  font-size: 32px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+:host ::ng-deep .rich figure {
+  display: flex;
+  justify-content: center;
+}
+
+:host ::ng-deep .rich figure img {
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px #0002;
+}
+
+@media (max-width: 767px) {
+  :host ::ng-deep .rich h4:nth-child(2) {
+    font-size: 24px;
+  }
+}

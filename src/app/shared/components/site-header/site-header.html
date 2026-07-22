@@ -1,0 +1,56 @@
+<header class="site-header">
+  <div class="wrap site-header__row">
+    <a class="brand" routerLink="/" (click)="closeMobileMenu()">
+      <img [src]="site().logo.src" [alt]="site().logo.alt || site().name" />
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      aria-controls="primary-navigation"
+      [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggleMobileMenu()"
+    >
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav
+      id="primary-navigation"
+      class="primary-nav"
+      [class.primary-nav--open]="mobileMenuOpen()"
+      aria-label="Primary navigation"
+    >
+      <ul class="primary-nav__list">
+        @for (item of navigation(); track item.id) {
+          <li class="primary-nav__item" [class.primary-nav__item--parent]="item.children.length">
+            <a
+              class="primary-nav__link"
+              [routerLink]="item.sourceHref"
+              routerLinkActive="primary-nav__link--active"
+              [routerLinkActiveOptions]="{ exact: item.sourceHref === '/' }"
+              (click)="closeMobileMenu()"
+            >{{ item.label }}</a>
+            @if (item.children.length) {
+              <button
+                class="sub-toggle"
+                type="button"
+                [attr.aria-expanded]="submenuOpen()"
+                aria-controls="about-menu"
+                aria-label="Toggle About submenu"
+                (click)="submenuOpen.update(open => !open)"
+              >⌄</button>
+              <ul id="about-menu" class="submenu" [class.submenu--open]="submenuOpen()">
+                @for (child of item.children; track child.id) {
+                  <li>
+                    <a [routerLink]="child.sourceHref" (click)="closeMobileMenu()">{{ child.label }}</a>
+                  </li>
+                }
+              </ul>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

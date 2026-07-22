@@ -1,0 +1,6 @@
+<article class="card">
+  <time class="card__date" [attr.datetime]="item().dateIso">{{ item().dateDisplay }}</time>
+  <h2 class="card__title"><a [routerLink]="item().route">{{ item().title }}</a></h2>
+  <app-content-blocks [blocks]="item().summary" />
+  <a class="card__more" [routerLink]="item().route">Read more<span class="sr-only">: {{ item().title }}</span></a>
+</article>
